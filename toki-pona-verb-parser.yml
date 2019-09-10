@@ -1,0 +1,9 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: https://gw.within.website
+functions:
+  toki-pona-verb-parser:
+    lang: node
+    handler: ./toki-pona-verb-parser
+    image: xena/toki-pona-verb-parser:latest
