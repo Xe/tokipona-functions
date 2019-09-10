@@ -1,0 +1,27 @@
+name: OpenFAAS
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Docker Login
+      uses: actions/docker/login@master
+      env:
+        DOCKER_USERNAME: "xena"
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    - name: OpenFAAS
+      run: |
+        wget -o faas https://github.com/openfaas/faas-cli/releases/download/$FAAS_VERSION/faas-cli
+        chmod +x faas
+        echo $FAAS_PASSWORD | ./faas login -g https://gw.within.website --username admin --password-stdin
+        faas-cli build -f toki-pona-parser.yml
+        faas-cli push -f toki-pona-parser.yml
+        faas-cli deploy -f toki-pona-parser.yml
+        
+        faas-cli build -f toki-pona-verb-parser.yml
+        faas-cli push -f toki-pona-verb-parser.yml
+        faas-cli deploy -f toki-pona-verb-parser.yml
+      env:
+        FAAS_VERSION: "0.9.2"
+        FAAS_PASSWORD: "${{ secrets.FAAS_PASSWORD }}"
