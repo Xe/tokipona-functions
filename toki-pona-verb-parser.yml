@@ -2,10 +2,12 @@ version: 1.0
 provider:
   name: openfaas
   gateway: https://gw.within.website
-labels:
-  com.openfaas.scale.zero: true
 functions:
   toki-pona-verb-parser:
+    labels:
+      com.openfaas.scale.zero: true
+    annotations:
+      prometheus.io.scrape: true
     lang: node
     handler: ./toki-pona-verb-parser
     image: xena/toki-pona-verb-parser:latest
