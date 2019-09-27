@@ -2,6 +2,8 @@ version: 1.0
 provider:
   name: openfaas
   gateway: https://gw.within.website
+labels:
+  com.openfaas.scale.zero: true
 functions:
   toki-pona-parser:
     lang: node
